@@ -1,24 +1,24 @@
 const express = require('express');
-const { validationResult } = require('express-validator');
+const {validationResult} = require('express-validator');
 
-const { objectValidation } = require('./validator');
+const {objectValidation} = require('./validator');
 
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
-  const helpMessage = 'POST /objects/aggregate {"objects": [{"name": "A", "amount": 1}, {...}]});';
+  let helpMessage = 'POST /objects/aggregate ';
+  helpMessage += '{"objects": [{"name": "A", "amount": 1}, {...}]})';
   res.send(helpMessage);
   return res.status(200);
 });
 
 app.post('/objects/aggregate', objectValidation(), (req, res) => {
-
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
+    return res.status(422).json({errors: errors.array()});
   }
 
   const nameAmountMap = {};
