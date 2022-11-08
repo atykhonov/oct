@@ -8,13 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get('/', (req, res) => {
-  let helpMessage = 'POST /objects/aggregate ';
-  helpMessage += '{"objects": [{"name": "A", "amount": 1}, {...}]})';
-  res.send(helpMessage);
-  return res.status(200);
-});
-
 app.post('/objects/aggregate', objectValidation(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
